@@ -7,3 +7,4 @@ sources:
     tables: 
       - name: SCRAPINGS
         identifier: SCRAPINGS_*
+      - name: RETAILS

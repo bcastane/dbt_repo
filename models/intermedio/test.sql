@@ -1,3 +1,3 @@
 SELECT *
-FROM {{ source('bigquery','SCRAPINGS')}} where _TABLE_SUFFIX='20240728'
+FROM {{ source('bigquery','RETAILS')}} 
 LIMIT 10
