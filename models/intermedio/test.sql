@@ -1,3 +1,3 @@
 SELECT *
-FROM {{ source('bigquery','RETAILS')}} 
+FROM {{ source('operacion','RETAILS')}} 
 LIMIT 10
