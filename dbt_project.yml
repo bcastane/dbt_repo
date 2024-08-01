@@ -41,3 +41,7 @@ models:
     intermedio:
       +schema: INTERMEDIO
       +materialized: table
+    model:
+      +schema: MODEL
+      +materialized: table
+
