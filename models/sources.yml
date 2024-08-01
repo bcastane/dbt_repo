@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: operacion 
+    schema: OPERACION
+    database: pasaporcaja
+    tables: 
+      - name: SCRAPINGS
+        identifier: SCRAPINGS_20240730
+      - name: RETAILS
+      - name: DELIVERY_SKU
+      - name: MATCHS
+      - name: VISITAS
+  - name: intermedio
+    schema: INTERMEDIO
+    database: pasaporcaja
+    tables:
+      - name: SKU_BASE
+
+
+

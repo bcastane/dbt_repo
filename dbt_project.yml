@@ -39,5 +39,5 @@ models:
   biqu_dbt:
     # Applies to all files under models/example/
     intermedio:
-      schema: INTERMEDIO
+      +schema: INTERMEDIO
       +materialized: table
