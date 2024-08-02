@@ -44,4 +44,8 @@ models:
     model:
       +schema: MODEL
       +materialized: table
+    paris:
+       +schema: PARIS
+       +materialized: table
+
 
