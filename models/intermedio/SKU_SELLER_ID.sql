@@ -17,4 +17,4 @@ JOIN
     {{ source('comercial', 'SELLERS_ID') }} SID
 ON 
     LOWER(SL.seller_name) = LOWER(SID.seller) 
-    AND SL.retail_id = SID.retail_id;
+    AND SL.retail_id = SID.retail_id

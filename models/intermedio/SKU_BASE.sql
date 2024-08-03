@@ -12,12 +12,12 @@ WITH CURRENT_DATA AS (
             FROM {{ source('operacion','SCRAPINGS')}} ),
             LAST_ROW AS ( SELECT *  EXCEPT(N)
             FROM CURRENT_DATA
-        WHERE N=1 ),
-            UPDATED_DATA AS (
-            SELECT CASE WHEN SB.SKU_ID IS NOT NULL THEN SB.SKU_ID ELSE GENERATE_UUID() END AS SKU_ID, LAST_ROW.*
-            FROM LAST_ROW 
-            LEFT JOIN  {{ source('intermedio','SKU_BASE')  }}  AS SB
-            ON LAST_ROW.SKU=SB.SKU AND LAST_ROW.RETAIL_ID=SB.RETAIL_ID)
+        WHERE N=1 )--,
+            --UPDATED_DATA AS (
+            --SELECT CASE WHEN SB.SKU_ID IS NOT NULL THEN SB.SKU_ID ELSE GENERATE_UUID() END AS SKU_ID, LAST_ROW.*
+            --FROM LAST_ROW 
+            --LEFT JOIN  {{ source('intermedio','SKU_BASE')  }}  AS SB
+            --ON LAST_ROW.SKU=SB.SKU AND LAST_ROW.RETAIL_ID=SB.RETAIL_ID)
 
-        SELECT *
+        SELECT *, GENERATE_UUID()  AS SKU_ID
         FROM UPDATED_DATA
