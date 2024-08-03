@@ -1,4 +1,5 @@
 version: 2
 
 models:
-    - name: sku_base
+    - name: SCRAP_PROD
+   

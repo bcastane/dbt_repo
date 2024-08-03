@@ -26,3 +26,8 @@ sources:
       - name: NIVEL_0
       - name: SELLERS_ID
       - name: SELLERS
+  - name: femsa
+    schema: FEMSA
+    database: pasaporcaja
+    tables:
+      - name: MATCHS_DASHBOARD

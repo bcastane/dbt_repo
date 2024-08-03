@@ -1,10 +1,19 @@
 {{
   config(
-    materialized='table',
+    materialized='incremental',
+    incremental_strategy = 'insert_overwrite',
     cluster_by="retail_id",
-    alias=add_date_if_underscore('SCRAP_PROD_')
+     partition_by={
+      "field": "process_date",
+      "data_type": "timestamp",
+      "granularity": "day"
+    },
+     partition_expiration_days = 90
+   
   )
 }}
+
+-- alias=add_date_if_underscore('SCRAP_PROD_')
 
 SELECT B.*, MT.product_id, V.visitas
 FROM (
@@ -35,6 +44,7 @@ FROM (
                scraped_at_date AS created_at,
                rating,
                n_reviews,
+               process_date,
                1 AS N_FILA
         FROM {{ ref("SKU_BASE") }}
         WHERE CAST(scraped_at AS DATE) >= CURRENT_DATE('America/Santiago') - 30
