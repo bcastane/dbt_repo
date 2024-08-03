@@ -6,7 +6,7 @@ sources:
     database: pasaporcaja
     tables: 
       - name: SCRAPINGS
-        identifier: SCRAPINGS_20240730
+        identifier: SCRAPINGS_*
       - name: RETAILS
       - name: DELIVERY_SKU
       - name: MATCHS
@@ -18,4 +18,16 @@ sources:
       - name: SKU_BASE
 
 
-
+  - name: comercial
+    schema: COMERCIAL
+    database: pasaporcaja
+    tables:
+      - name: PRODUCT_DETAILS
+      - name: NIVEL_0
+      - name: SELLERS_ID
+      - name: SELLERS
+  - name: femsa
+    schema: FEMSA
+    database: pasaporcaja
+    tables:
+      - name: MATCHS_DASHBOARD

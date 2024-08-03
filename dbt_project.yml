@@ -44,4 +44,15 @@ models:
     model:
       +schema: MODEL
       +materialized: table
+    paris:
+       +schema: PARIS
+       +materialized: table
+    cruzverde:
+        +schema: CRUZVERDE
+        +materialized: table
+    femsa:
+        +schema: FEMSA
+        +materialized: table
+
+
 
