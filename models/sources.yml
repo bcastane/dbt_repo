@@ -11,13 +11,6 @@ sources:
       - name: DELIVERY_SKU
       - name: MATCHS
       - name: VISITAS
-  - name: intermedio
-    schema: INTERMEDIO
-    database: pasaporcaja
-    tables:
-      - name: SKU_BASE
-
-
   - name: comercial
     schema: COMERCIAL
     database: pasaporcaja

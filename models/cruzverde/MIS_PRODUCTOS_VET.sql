@@ -1,11 +1,11 @@
 
     CREATE TEMP FUNCTION LEAST_ARRAY(arr ANY TYPE) AS (
     (SELECT min(a) FROM UNNEST(arr) a WHERE a IS NOT NULL)
-);
+)
 
 CREATE TEMP FUNCTION GREAT_ARRAY(arr ANY TYPE) AS (
     (SELECT max(a) FROM UNNEST(arr) a WHERE a IS NOT NULL)
-);
+)
 
 CREATE TEMP FUNCTION PRICE_FORMAT(price ANY TYPE) AS (
     CONCAT("$", REPLACE(
@@ -13,7 +13,7 @@ CREATE TEMP FUNCTION PRICE_FORMAT(price ANY TYPE) AS (
         ',',
         '.'
     ))
-);
+)
 
 SELECT
     *,
@@ -133,7 +133,8 @@ FROM (
         FROM (
             SELECT * FROM 
         {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  ) AS AUX
+        WHERE  process_date=CURRENT_DATE('America/Santiago')
+        ) AS AUX
     JOIN `pasaporcaja.CRUZVERDE.VET_SEARCH` AS VET
     ON  AUX.sku=REPLACE(VET.sku ,".0","")  AND AUX.retail_id=VET.retail_id
     ) AS A
@@ -142,7 +143,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
         FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and retail_id = 30
+        WHERE process_date=CURRENT_DATE('America/Santiago')  and retail_id = 30
     ) AS B
     ON A.product_id = B.product_id AND B.ROWN = 1
         LEFT JOIN (
@@ -150,7 +151,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
         FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and retail_id = 32
+        WHERE  process_date=CURRENT_DATE('America/Santiago')   and retail_id = 32
     ) AS C
     ON A.product_id = C.product_id AND C.ROWN = 1
     LEFT JOIN (
@@ -158,7 +159,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
         FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and  retail_id = 35
+        WHERE  process_date=CURRENT_DATE('America/Santiago') and  retail_id = 35
     ) AS D
     ON A.product_id = D.product_id AND D.ROWN = 1
     LEFT JOIN (
@@ -166,7 +167,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
         FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and retail_id = 36
+        WHERE process_date=CURRENT_DATE('America/Santiago')  and retail_id = 36
     ) AS E
     ON A.product_id = E.product_id AND E.ROWN = 1
     LEFT JOIN (
@@ -174,7 +175,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
           FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and retail_id = 37
+        WHERE  process_date=CURRENT_DATE('America/Santiago') and retail_id = 37
     ) AS F
     ON A.product_id = F.product_id AND F.ROWN = 1
     LEFT JOIN (
@@ -182,7 +183,7 @@ FROM (
             CASE WHEN stock = False THEN NULL ELSE card_price END AS aux_price,
             ROW_NUMBER() OVER (PARTITION BY CAST(product_id AS STRING) ORDER BY stock, offer_price) AS ROWN
            FROM {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') 
+        WHERE  process_date=CURRENT_DATE('America/Santiago')
         and retail_id = 38
     ) AS G
     ON A.product_id = G.product_id AND G.ROWN = 1

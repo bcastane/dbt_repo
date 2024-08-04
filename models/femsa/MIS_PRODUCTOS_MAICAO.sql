@@ -1,11 +1,11 @@
 
     CREATE TEMP FUNCTION LEAST_ARRAY(arr ANY TYPE) AS ((
         SELECT min(a) FROM UNNEST(arr) a WHERE a is not NULL
-    ));
+    ))
     
     CREATE TEMP FUNCTION GREAT_ARRAY(arr ANY TYPE) AS ((
         SELECT max(a) FROM UNNEST(arr) a WHERE a is not NULL
-    ));
+    ))
     CREATE TEMP FUNCTION PRICE_FORMAT(price ANY TYPE) AS ((
         CONCAT("$",REPLACE(
            FORMAT("%'.0f",CAST( price AS NUMERIC)),
@@ -13,7 +13,7 @@
            '.'
          ))
         
-        ));
+        ))
     
     SELECT
     *,
@@ -58,7 +58,7 @@
          CASE WHEN stock=False THEN NULL ELSE card_price END AS aux_price
          FROM 
        {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') 
+        WHERE  process_date=CURRENT_DATE('America/Santiago')
         and retail_id= 33) AS A
         LEFT JOIN 
         (SELECT *,
@@ -66,7 +66,7 @@
          ROW_NUMBER() OVER ( PARTITION BY  CAST(product_id AS STRING) ORDER BY stock,offer_price ) AS ROWN
          FROM 
         {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','')  and  retail_id= 34) AS B
+        WHERE   process_date=CURRENT_DATE('America/Santiago')  and  retail_id= 34) AS B
         ON A.product_id= B.product_id AND B.ROWN=1
         JOIN pasaporcaja.TEMP.NIVELES_SKU as N
         ON A.sku=N.sku AND A.retail_id= N.retail_id

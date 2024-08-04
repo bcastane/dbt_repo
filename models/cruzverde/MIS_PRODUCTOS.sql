@@ -1,11 +1,11 @@
 
     CREATE TEMP FUNCTION LEAST_ARRAY(arr ANY TYPE) AS ((
         SELECT min(a) FROM UNNEST(arr) a WHERE a is not NULL
-    ));
+    ))
     
     CREATE TEMP FUNCTION GREAT_ARRAY(arr ANY TYPE) AS ((
         SELECT max(a) FROM UNNEST(arr) a WHERE a is not NULL
-    ));
+    ))
     CREATE TEMP FUNCTION PRICE_FORMAT(price ANY TYPE) AS ((
         CONCAT("$",REPLACE(
            FORMAT("%'.0f",CAST( price AS NUMERIC)),
@@ -13,7 +13,7 @@
            '.'
          ))
         
-        ));
+        ))
     
     SELECT
     *,
@@ -69,7 +69,7 @@
          CASE WHEN stock=False THEN NULL ELSE card_price END AS aux_price
          FROM 
          {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') and retail_id= 29) AS A
+        WHERE   process_date=CURRENT_DATE('America/Santiago') and retail_id= 29) AS A
         LEFT JOIN (
         SELECT
         SKU_FEMSA,
@@ -89,7 +89,7 @@
          ROW_NUMBER() OVER ( PARTITION BY  CAST(product_id AS STRING) ORDER BY stock,offer_price ) AS ROWN
          FROM 
          {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') and
+        WHERE  process_date=CURRENT_DATE('America/Santiago')  and
           retail_id= 30) AS B
         ON B.sku=M1.SKU_RETAIL_30
        
@@ -99,7 +99,7 @@
          ROW_NUMBER() OVER ( PARTITION BY  CAST(product_id AS STRING) ORDER BY stock,offer_price ) AS ROWN
          FROM 
           {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') and
+        WHERE  process_date=CURRENT_DATE('America/Santiago')  and
           retail_id= 31) AS C
         ON C.sku=M1.SKU_RETAIL_31
         LEFT JOIN
@@ -108,7 +108,7 @@
          ROW_NUMBER() OVER ( PARTITION BY  CAST(product_id AS STRING) ORDER BY stock,offer_price ) AS ROWN
         FROM 
          {{ref('SCRAP_PROD')}} 
-        WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') and
+        WHERE   process_date=CURRENT_DATE('America/Santiago') and
          retail_id= 32) AS D
         ON D.sku=M1.SKU_RETAIL_32
         JOIN pasaporcaja.TEMP.NIVELES_SKU as N

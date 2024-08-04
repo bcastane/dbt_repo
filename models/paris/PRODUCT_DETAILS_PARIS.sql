@@ -23,9 +23,10 @@
                                    WHEN P.retail_id in (7,10) THEN FALSE
                                    ELSE TRUE END IS_MARKETPLACE
                                     
-                          FROM (SELECT product_id,sku,product_name,product_url,retail_id,visitas,stock, offer_price, normal_price, card_price , scraped_at_date as fecha_actualizacion, PARSE_DATE('%Y%m%d', _TABLE_SUFFIX)  as fecha 
+                          FROM (SELECT product_id,sku,product_name,product_url,retail_id,visitas,stock, offer_price, normal_price, card_price , scraped_at_date as fecha_actualizacion,
+                            process_date as fecha 
                               FROM  {{ref('SCRAP_PROD')}} 
-                                WHERE _TABLE_SUFFIX=REPLACE(CAST(CURRENT_DATE('America/Santiago') AS STRING),'-','') and retail_id in (1,2,3,7,10,12,20) ) as P
+                                WHERE process_date=CURRENT_DATE('America/Santiago')  and retail_id in (1,2,3,7,10,12,20) ) as P
                           LEFT JOIN {{ ref('SKU_SELLER_ID') }} SL
                           ON SL.sku=P.sku and SL.retail_id=P.retail_id
                           JOIN  {{ source('operacion','RETAILS')}} as R

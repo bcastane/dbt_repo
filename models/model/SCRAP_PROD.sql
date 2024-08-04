@@ -5,7 +5,7 @@
     cluster_by="retail_id",
      partition_by={
       "field": "process_date",
-      "data_type": "timestamp",
+      "data_type": "date",
       "granularity": "day"
     },
      partition_expiration_days = 90

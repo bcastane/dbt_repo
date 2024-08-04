@@ -1,8 +1,5 @@
 {% macro add_date_if_underscore(alias) %}
-    {% if 'refs' in context['node'] %}
  
-        {{ alias }}
-    {% else %}
         {# Import the datetime module #}
         {% set timezone = modules.pytz.timezone('America/Santiago') %}
 
@@ -17,5 +14,5 @@
         {% else %}
             {{ alias }}
         {% endif %}
-    {% endif %}
+  
 {% endmacro %}
