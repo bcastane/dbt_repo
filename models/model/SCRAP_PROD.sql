@@ -17,12 +17,6 @@
 
 SELECT B.*, MT.product_id, V.visitas
 FROM (
-    SELECT A.*, 
-           CASE 
-               WHEN CAST(SCRAPED_AT_DATE AS DATE) = CURRENT_DATE('America/Santiago') THEN TRUE 
-               ELSE FALSE 
-           END AS stock
-    FROM (
         SELECT scraped_at,
                scraped_at_date,
                sku,
@@ -45,11 +39,11 @@ FROM (
                rating,
                n_reviews,
                process_date,
+               is_today AS stock,
                1 AS N_FILA
         FROM {{ ref("SKU_BASE") }}
         WHERE CAST(scraped_at AS DATE) >= CURRENT_DATE('America/Santiago') - 30
-    ) AS A
-    WHERE A.N_FILA = 1
+    
 ) AS B
 JOIN {{ source('operacion', 'MATCHS') }} AS MT
     ON B.sku = MT.sku AND B.retail_id = MT.retail_id
